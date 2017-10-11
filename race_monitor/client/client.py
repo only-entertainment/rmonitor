@@ -6,7 +6,7 @@ from race_monitor.settings.settings import *
 
 
 try:
-    tn = Telnet(HOST, PORT, timeout=5)
+    tn = Telnet(HOST, PORT, timeout=TIMEOUT)
 
     while True:
         # Read line by line...
@@ -14,6 +14,10 @@ try:
 
         # Make it a string
         msg = msg.strip(b"\r\n").decode()
+
+        # Little cleanup
+        msg = msg.replace('\"', '')
+
         logger.info(msg)
 
         # Get message for string

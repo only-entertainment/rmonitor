@@ -1,5 +1,9 @@
 from race_monitor.settings.settings import *
 
+#############
+#  Messages
+#############
+
 
 class HeartbeatMessage(object):
 
@@ -322,21 +326,28 @@ class LapInformationMessage(object):
         )
 
 
+#############
+#  Helpers
+#############
+
 MESSAGE_TYPES = {
-    "$F": HeartbeatMessage,
-    "$B": RunInformationMessage,
-    "$G": RaceInformationMessage,
-    "$A": CompetitorInformationMessage,
-    "$C": ClassInformationMessage,
-    "$H": PracticeQualifyingInformationMessage,
-    "$E": SettingInformationMessage,
-    "$I": InitRecordMessage,
-    "$J": PassingInformationMessage,
-    "$SP": LapInformationMessage,
-    "$SR": LapInformationMessage,
+    # Documented...
+    "$A":    CompetitorInformationMessage,
+    "$B":    RunInformationMessage,
+    "$C":    ClassInformationMessage,
     "$COMP": CompInformationMessage,
+    "$E":    SettingInformationMessage,
+    "$F":    HeartbeatMessage,
+    "$G":    RaceInformationMessage,
+    "$H":    PracticeQualifyingInformationMessage,
+    "$I":    InitRecordMessage,
+    "$J":    PassingInformationMessage,
 
     # Undocumented...
+    "$SP":   LapInformationMessage,
+    "$SR":   LapInformationMessage,
+
+    # TODO: Figure out what these are for?
     # $RMLT
     # $RMS
 }
@@ -346,9 +357,6 @@ class MessageFactory(object):
 
     @staticmethod
     def get_message(msg):
-        # Little cleanup
-        msg = msg.replace('\"', '')
-
         # Comma separated string
         fields = msg.split(",")
 
@@ -358,14 +366,14 @@ class MessageFactory(object):
         # Split off the data fields
         fields = fields[1:]
 
-        #logger.debug(msg_type)
-        #logger.debug(fields)
+        logger.debug(msg_type)
+        logger.debug(fields)
 
+        # Find the corresponding message class
         clazz = MESSAGE_TYPES.get(msg_type)
         if not clazz:
             logger.error("Missing message type: %s", msg_type)
+            return None
 
-        return clazz
-
-
-
+        # Return class instance with data
+        return clazz(fields)
