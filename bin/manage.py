@@ -6,7 +6,10 @@ from race_monitor.settings.settings import logger
 
 
 def run():
-    Client.connect()
+    try:
+        Client.connect()
+    except KeyboardInterrupt:
+            pass
 
 
 class RaceMonitorShell(cmd.Cmd):
