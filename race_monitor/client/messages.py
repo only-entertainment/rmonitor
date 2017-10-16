@@ -350,6 +350,8 @@ MESSAGE_TYPES = {
     # TODO: Figure out what these are for?
     # $RMLT
     # $RMS
+    # $RMDTL
+    # $RMCA
 }
 
 
@@ -357,6 +359,10 @@ class MessageFactory(object):
 
     @staticmethod
     def get_message(msg):
+        # Little cleanup
+        msg = msg.strip(b"\r\n").decode()
+        msg = msg.replace('\"', '')
+
         # Comma separated string
         fields = msg.split(",")
 
@@ -372,7 +378,7 @@ class MessageFactory(object):
         # Find the corresponding message class
         clazz = MESSAGE_TYPES.get(msg_type)
         if not clazz:
-            logger.error("Missing message type: %s", msg_type)
+            logger.debug("Missing message type: %s", msg_type)
             return None
 
         # Return class instance with data

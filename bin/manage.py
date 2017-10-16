@@ -1,11 +1,12 @@
 import cmd
 import sys
 
+from race_monitor.client.client import Client
 from race_monitor.settings.settings import logger
 
 
 def run():
-    logger.info("Run...")
+    Client.connect()
 
 
 class RaceMonitorShell(cmd.Cmd):

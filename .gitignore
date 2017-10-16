@@ -10,8 +10,7 @@ race_monitor.egg-info/SOURCES.txt
 race_monitor.egg-info/dependency_links.txt
 race_monitor.egg-info/not-zip-safe
 race_monitor.egg-info/top_level.txt
-race_monitor/__pycache__/__init__.cpython-35.pyc
-race_monitor/client/__pycache__/__init__.cpython-35.pyc
-race_monitor/client/__pycache__/messages.cpython-35.pyc
-race_monitor/settings/__pycache__/__init__.cpython-35.pyc
-race_monitor/settings/__pycache__/settings.cpython-35.pyc
+*.pyc
+__pycache__
+.vscode/*.*
+.idea/vcs.xml

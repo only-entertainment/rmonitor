@@ -5,27 +5,29 @@ from race_monitor.client.messages import MessageFactory
 from race_monitor.settings.settings import *
 
 
-try:
-    tn = Telnet(HOST, PORT, timeout=TIMEOUT)
+class Client(object):
 
-    while True:
-        # Read line by line...
-        msg = tn.read_until(b'\n')
+    @staticmethod
+    def connect():
+        # Blocking!
+        try:
+            tn = Telnet(HOST, PORT, timeout=TIMEOUT)
 
-        # Make it a string
-        msg = msg.strip(b"\r\n").decode()
+            while True:
+                # Read line by line...
+                msg = tn.read_until(b'\n')
+                logger.debug('Raw: %s' % msg)
 
-        # Little cleanup
-        msg = msg.replace('\"', '')
+                # Get message for string
+                m = MessageFactory.get_message(msg)
+                logger.info('Message: %s' % str(m))
 
-        logger.info(msg)
+                # Wait
+                sleep(SLEEP)
 
-        # Get message for string
-        m = MessageFactory.get_message(msg)
-        logger.info(m)
+        except KeyboardInterrupt:
+            pass
 
-        # Wait
-        sleep(SLEEP)
 
-except KeyboardInterrupt:
-    pass
+if __name__ == '__main__':
+    Client.connect()
