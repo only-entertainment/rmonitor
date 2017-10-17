@@ -22,11 +22,16 @@ class Client(object):
                 m = MessageFactory.get_message(msg)
                 logger.info('Message: %s' % str(m))
 
+                # Do something with message
+                # TODO: ???
+
                 # Wait
                 sleep(SLEEP)
 
         except KeyboardInterrupt:
             pass
+        except EOFError:
+            logger.error("Connection lost!")
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+from race_monitor.client.helpers import Duration
 from race_monitor.settings.settings import *
 
 #############
@@ -16,17 +17,17 @@ class HeartbeatMessage(object):
 
         # Time until the session ends
         # ("HH:MM:SS")
-        self.time_to_go = fields[1]
+        self.time_to_go = Duration(fields[1])
 
         # The current time
         # ("HH:MM:SS")
-        self.time_of_day = fields[2]
+        self.time_of_day = Duration(fields[2])
 
         # The time from the first green flag ("HH:MM:SS")
-        self.race_time = fields[3]
+        self.race_time = Duration(fields[3])
 
         # The status field is 6 characters long with trailing spaces
-        # ("HH:MM:SS")
+        # (GREEN, etc.)
         self.flag_status = fields[4]
 
     def __repr__(self):
@@ -80,7 +81,7 @@ class RaceInformationMessage(object):
 
         # Race time
         # (HH:MM:SS.DDD)
-        self.total_time = fields[3]
+        self.total_time = Duration(fields[3])
 
     def __repr__(self):
         return "RaceInformation(%s, %s, %s, %s, %s)" % (
@@ -224,7 +225,7 @@ class PracticeQualifyingInformationMessage(object):
 
         # The lap time of the best lap
         # (HH:MM:SS.DDD)
-        self.best_lap_time = fields[3]
+        self.best_lap_time = Duration(fields[3])
 
     def __repr__(self):
         return "PracticeQualifyingInformation(%s, %s, %s, %s, %s)" % (
@@ -265,7 +266,7 @@ class InitRecordMessage(object):
 
         # The current time
         # (HH:MM:SS.DDD)
-        self.time_of_day = fields[0]
+        self.time_of_day = Duration(fields[0])
 
         # The current date
         # (dd mmmm yy)
@@ -290,11 +291,11 @@ class PassingInformationMessage(object):
 
         # The current lap time
         # (HH:MM:SS.DDD)
-        self.lap_time = fields[1]
+        self.lap_time = Duration(fields[1])
 
         # The total time
         # (HH:MM:SS.DDD)
-        self.total_time = fields[2]
+        self.total_time = Duration(fields[2])
 
     def __repr__(self):
         return "PassingInformation(%s, %s, %s, %s)" % (
@@ -314,7 +315,7 @@ class LapInformationMessage(object):
         self.position = fields[0]
         self.registration_number = fields[1]
         self.lap_number = fields[2]
-        self.lap_time = fields[3]
+        self.lap_time = Duration(fields[3])
 
     def __repr__(self):
         return "LapInformation(%s, %s, %s, %s, %s)" % (

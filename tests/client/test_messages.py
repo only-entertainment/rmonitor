@@ -11,14 +11,14 @@ class TestHeartbeatMessage(TestCase):
 
         self.assertEqual(obj.type, '$F')
         self.assertEqual(obj.laps_to_go, '14')
-        self.assertEqual(obj.time_to_go, '00:12:45')
-        self.assertEqual(obj.time_of_day, '13:34:23')
-        self.assertEqual(obj.race_time, '00:09:47')
+        self.assertEqual(str(obj.time_to_go), 'Duration(0:12:45)')
+        self.assertEqual(str(obj.time_of_day), 'Duration(13:34:23)')
+        self.assertEqual(str(obj.race_time), 'Duration(0:09:47)')
         self.assertEqual(obj.flag_status, 'Green')
 
         self.assertEqual(
             str(obj),
-            'Heartbeat($F, 14, 00:12:45, 13:34:23, 00:09:47, Green)'
+            'Heartbeat($F, 14, Duration(0:12:45), Duration(13:34:23), Duration(0:09:47), Green)'
         )
 
 
@@ -50,11 +50,11 @@ class TestRaceInformationMessage(TestCase):
         self.assertEqual(obj.position, '3')
         self.assertEqual(obj.registration_number, '1234BE')
         self.assertEqual(obj.laps, '14')
-        self.assertEqual(obj.total_time, '01:12:47.872')
+        self.assertEqual(str(obj.total_time), 'Duration(1:12:47.872000)')
 
         self.assertEqual(
             str(obj),
-            'RaceInformation($G, 3, 1234BE, 14, 01:12:47.872)'
+            'RaceInformation($G, 3, 1234BE, 14, Duration(1:12:47.872000))'
         )
 
 
@@ -130,11 +130,12 @@ class TestPracticeQualifyingInformationMessage(TestCase):
         self.assertEqual(obj.position, '2')
         self.assertEqual(obj.registration_number, '1234BE')
         self.assertEqual(obj.best_lap, '3')
-        self.assertEqual(obj.best_lap_time, '00:02:17.872')
+        self.assertEqual(str(obj.best_lap_time), 'Duration(0:02:17.872000)')
+        self.assertEqual(str(obj.best_lap_time), 'Duration(0:02:17.872000)')
 
         self.assertEqual(
             str(obj),
-            'PracticeQualifyingInformation($H, 2, 1234BE, 3, 00:02:17.872)'
+            'PracticeQualifyingInformation($H, 2, 1234BE, 3, Duration(0:02:17.872000))'
         )
 
 
@@ -177,12 +178,12 @@ class TestInitRecordMessage(TestCase):
         )
 
         self.assertEqual(obj.type, '$I')
-        self.assertEqual(obj.time_of_day, '16:36:08.000')
+        self.assertEqual(str(obj.time_of_day), 'Duration(16:36:08)')
         self.assertEqual(obj.date, '12 jan 01')
 
         self.assertEqual(
             str(obj),
-            'InitRecord($I, 16:36:08.000, 12 jan 01)'
+            'InitRecord($I, Duration(16:36:08), 12 jan 01)'
         )
 
 
@@ -195,12 +196,12 @@ class TestPassingInformationMessage(TestCase):
 
         self.assertEqual(obj.type, '$J')
         self.assertEqual(obj.registration_number, '1234BE')
-        self.assertEqual(obj.lap_time, '00:02:03.826')
-        self.assertEqual(obj.total_time, '01:42:17.672')
+        self.assertEqual(str(obj.lap_time), 'Duration(0:02:03.826000)')
+        self.assertEqual(str(obj.total_time), 'Duration(1:42:17.672000)')
 
         self.assertEqual(
             str(obj),
-            'PassingInformation($J, 1234BE, 00:02:03.826, 01:42:17.672)'
+            'PassingInformation($J, 1234BE, Duration(0:02:03.826000), Duration(1:42:17.672000))'
         )
 
 
@@ -215,11 +216,11 @@ class TestLapInformationMessage(TestCase):
         self.assertEqual(obj.position, '1')
         self.assertEqual(obj.registration_number, 'ABCD123')
         self.assertEqual(obj.lap_number, '3')
-        self.assertEqual(obj.lap_time, '00:01:08.123')
+        self.assertEqual(str(obj.lap_time), 'Duration(0:01:08.123000)')
 
         self.assertEqual(
             str(obj),
-            'LapInformation($SP/$SR, 1, ABCD123, 3, 00:01:08.123)'
+            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000))'
         )
 
         obj = MessageFactory.get_message(
@@ -230,11 +231,11 @@ class TestLapInformationMessage(TestCase):
         self.assertEqual(obj.position, '1')
         self.assertEqual(obj.registration_number, 'ABCD123')
         self.assertEqual(obj.lap_number, '3')
-        self.assertEqual(obj.lap_time, '00:01:08.123')
+        self.assertEqual(str(obj.lap_time), 'Duration(0:01:08.123000)')
 
         self.assertEqual(
             str(obj),
-            'LapInformation($SP/$SR, 1, ABCD123, 3, 00:01:08.123)'
+            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000))'
         )
 
 
