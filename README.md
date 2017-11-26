@@ -87,10 +87,14 @@ The protocol specifications are from:
 
 ### Configuring the app to run
 
-    TODO
+1) Add server and port of the RMonitor live feed in `race_monitor/settings/settings.py`.
+
+    ADDRESS = "50.56.75.58:50095"
     
     
 ### Running the app
+
+1) From the root of the project:
 
     (race_monitor) $ python ./bin/manage.py run
 
