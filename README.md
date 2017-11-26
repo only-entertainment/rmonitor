@@ -2,9 +2,22 @@
 
 ### What is this?
 
-TODO
+This Python library parses the RMonitor timing protocol used in the live timing of automotive and karting events.
 
-### Pre-Requisites, assumes OSX
+
+### Prior Work
+
+This code draws inspiration from this work:
+
+    https://github.com/zacharyfox/RMonitorLeaderboard
+    
+The protocol specifications are from:
+
+    http://www.imsatiming.com/software/protocols/AMB%20RMonitor%20Timing%20Protocol.pdf
+    http://www.imsatiming.com/software/protocols/IMSA%20Enhanced%20RMon%20Timing%20Protocol%20v1.03.pdf
+    
+
+### Pre-Requisites for development, assumes OSX
 
 1) Install Brew:
 
@@ -74,7 +87,15 @@ TODO
     
 ### Running the app
 
+TODO
+
+
+## Contributions
+
+All pull requests are welcome! Look at the issues list for ideas or bugs.
+
+
 ## Contributors
 
-## License
-
+    Kris Neuharth (kris.neuharth@gmail.com)
+    Ryan Kuhl (rkk09c@gmail.com)
