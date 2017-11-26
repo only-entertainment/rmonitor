@@ -26,7 +26,7 @@ class RaceMonitorShell(cmd.Cmd):
         exit()
 
     def do_run(self, arg):
-        'Run for all active PAGs'
+        'Run and receive messages'
         logger.info("Running and monitoring...")
         run()
 

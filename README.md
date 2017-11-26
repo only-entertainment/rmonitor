@@ -84,10 +84,15 @@ The protocol specifications are from:
 
     (race_monitor) $ nosetests
     
+
+### Configuring the app to run
+
+    TODO
+    
     
 ### Running the app
 
-TODO
+    (race_monitor) $ python ./bin/manage.py run
 
 
 ## Contributions
