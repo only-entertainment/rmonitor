@@ -1,5 +1,6 @@
 from unittest import TestCase
-from rmonitor.client.messages import *
+
+from rmonitor.client.message_factory import MessageFactory
 
 
 class TestHeartbeatMessage(TestCase):
