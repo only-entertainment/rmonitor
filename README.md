@@ -2,8 +2,7 @@
 
 ### What is this?
 
-This Python library parses the RMonitor timing protocol used in the live timing of automotive and karting events.
-
+A Python library for parsing the RMonitor timing protocol used in the live timing of automotive and karting events.
 
 ### Prior Work
 
