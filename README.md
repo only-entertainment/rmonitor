@@ -76,7 +76,6 @@ The protocol specifications are from:
 
 5) Install Python dependencies:
 
-	    (rmonitor) $ pip install -r requirements.txt
 	    (rmonitor) $ python setup.py develop
 
 6) Run unit tests:
