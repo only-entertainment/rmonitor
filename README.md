@@ -1,4 +1,4 @@
-# Race Monitor Client
+# RMonitor Client
 
 ### What is this?
 
@@ -60,33 +60,33 @@ The protocol specifications are from:
         $ cd projects
 
         (required)
-	    $ git clone https://github.com/krisneuharth/race_monitor race_monitor
+	    $ git clone https://github.com/krisneuharth/rmonitor rmonitor
 
 2) Switch to project directory:
 
-	    $ cd race_monitor
+	    $ cd rmonitor
 
 3) Create virtualenv:
 
-	    $ mkvirtualenv --python=/usr/local/bin/python3 race_monitor
+	    $ mkvirtualenv --python=/usr/local/bin/python3 rmonitor
 
 4) Activate environment:
 
-	    $ workon race_monitor
+	    $ workon rmonitor
 
 5) Install Python dependencies:
 
-	    (race_monitor) $ pip install -r requirements.txt
-	    (race_monitor) $ python setup.py develop
+	    (rmonitor) $ pip install -r requirements.txt
+	    (rmonitor) $ python setup.py develop
 
 6) Run unit tests:
 
-        (race_monitor) $ nosetests
+        (rmonitor) $ nosetests
     
 
 ### Configuring the app to run
 
-1) Add server and port of the RMonitor live feed in `race_monitor/settings/settings.py`.
+1) Add server and port of the RMonitor live feed in `rmonitor/settings/settings.py`.
 
         ADDRESS = "50.56.75.58:50095"
     
@@ -95,7 +95,7 @@ The protocol specifications are from:
 
 1) From the root of the project:
 
-        (race_monitor) $ python ./bin/manage.py run
+        (rmonitor) $ python ./bin/manage.py run
 
 
 ## Contributions

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from race_monitor.client.messages import *
+from rmonitor.client.messages import *
 
 
 class TestHeartbeatMessage(TestCase):

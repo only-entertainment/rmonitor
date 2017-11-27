@@ -1,8 +1,8 @@
 import cmd
 import sys
 
-from race_monitor.client.client import Client
-from race_monitor.settings.settings import logger
+from rmonitor.client.client import Client
+from rmonitor.settings.settings import logger
 
 
 def run():
@@ -12,9 +12,9 @@ def run():
             pass
 
 
-class RaceMonitorShell(cmd.Cmd):
+class RMonitorShell(cmd.Cmd):
 
-    intro = 'Welcome to the RaceMonitor shell. Type help or ? to list commands.\n'
+    intro = 'Welcome to the RMonitor shell. Type help or ? to list commands.\n'
     prompt = '>> '
 
     def do_q(self, arg):
@@ -47,14 +47,14 @@ if __name__ == '__main__':
         ccc = args[0]
 
         if ccc == 'run':
-            RaceMonitorShell().do_run(None)
+            RMonitorShell().do_run(None)
 
         elif ccc == 'shell':
-            RaceMonitorShell().cmdloop()
+            RMonitorShell().cmdloop()
         else:
             # Default
-            RaceMonitorShell().cmdloop()
+            RMonitorShell().cmdloop()
 
     elif len(args) == 1:
         # Fully interactive mode
-        RaceMonitorShell().cmdloop()
+        RMonitorShell().cmdloop()

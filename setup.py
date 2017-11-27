@@ -10,7 +10,7 @@ with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
 
 
 setup(
-    name="race_monitor",
+    name="rmonitor",
     version="0.0.1",
     description="",
     url="",

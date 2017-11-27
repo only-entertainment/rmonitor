@@ -1,8 +1,8 @@
 from telnetlib import Telnet
 from time import sleep
 
-from race_monitor.client.messages import MessageFactory
-from race_monitor.settings.settings import *
+from rmonitor.client.messages import MessageFactory
+from rmonitor.settings.settings import *
 
 
 class Client(object):

@@ -1,5 +1,5 @@
-from race_monitor.client.helpers import Duration
-from race_monitor.settings.settings import *
+from rmonitor.client.helpers import Duration
+from rmonitor.settings.settings import *
 
 #############
 #  Messages
