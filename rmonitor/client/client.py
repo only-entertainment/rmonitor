@@ -1,7 +1,7 @@
 from telnetlib import Telnet
 from time import sleep
 
-from rmonitor.common.messages import MessageFactory
+from rmonitor.client.message_factory import MessageFactory
 from rmonitor.settings.settings import *
 
 
