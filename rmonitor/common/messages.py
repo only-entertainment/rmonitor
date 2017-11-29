@@ -1,4 +1,4 @@
-from rmonitor.client.helpers import Duration
+from rmonitor.common.helpers import Duration
 
 
 class HeartbeatMessage(object):

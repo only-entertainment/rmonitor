@@ -1,4 +1,4 @@
-from rmonitor.client.messages import MESSAGE_TYPES
+from rmonitor.common.messages import MESSAGE_TYPES
 from rmonitor.settings.settings import logger
 
 

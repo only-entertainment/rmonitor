@@ -1,5 +1,5 @@
 from rmonitor.client.message_factory import MessageFactory
-from rmonitor.client.messages import *
+from rmonitor.common.messages import *
 from rmonitor.settings.settings import logger
 
 import re
