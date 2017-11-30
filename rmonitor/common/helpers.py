@@ -1,5 +1,26 @@
+import json
 from datetime import datetime, timedelta
 import re
+from operator import attrgetter
+
+
+def as_sorted_list(s, key):
+    return sorted(
+        list(s),
+        key=attrgetter(key)
+    )
+
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+        elif isinstance(obj, datetime):
+            return str(obj)
+        elif isinstance(obj, Duration):
+            return str(obj)
+
+        return json.JSONEncoder.default(self, obj)
 
 
 def lower_case(s):
@@ -63,6 +84,9 @@ class Duration(object):
 
     def __repr__(self):
         return 'Duration(%s)' % self.time
+
+    def __str__(self):
+        return str(self.time)
 
 
 if __name__ == '__main__':

@@ -3,12 +3,14 @@ from collections import namedtuple
 from datetime import datetime
 
 # Tuples for easier storage and access
-Meta = namedtuple('Meta', ('last_updated',))
-Driver = namedtuple('Driver', ('TODO',))
-Team = namedtuple('Team', ('TODO',))
-Class = namedtuple('Class', ('TODO',))
-Race = namedtuple('Race', ('TODO',))
-Track = namedtuple('Track', ('name', 'length',))
+from rmonitor.common.helpers import JSONEncoder, as_sorted_list
+
+Meta = namedtuple('Meta', 'last_updated')
+Driver = namedtuple('Driver', 'TODO')
+Team = namedtuple('Team', 'TODO')
+Class = namedtuple('Class', 'unique_number, description')
+Race = namedtuple('Race', 'laps_to_go, time_to_go, time_of_day, race_time, flag_status')
+Track = namedtuple('Track', 'name, length')
 
 
 class DB(object):
@@ -29,24 +31,32 @@ class DB(object):
 
         db = dict()
 
-        db['meta'] = Meta()
-        db['race'] = Race()
-        db['track'] = Track()
-        db['classes'] = set()
-        db['teams'] = set()
-        db['drivers'] = set()
+        db['meta'] = Meta(None)
+        db['race'] = Race(None, None, None, None, None)
+        db['track'] = Track(None, None)
+        db['classes'] = set([])
+        db['teams'] = set([])
+        db['drivers'] = set([])
 
         self.db = db
 
     def __repr__(self):
-        return json.dumps(self.db)
+        return json.dumps(
+            self.db,
+            cls=JSONEncoder,
+            indent=4,
+            sort_keys=True
+        )
 
     def last_updated(self):
-        self.db['meta'].last_updated = datetime.now()
+        # Gross.
+        meta = self.db['meta']
+        meta = meta._replace(last_updated=datetime.now())
+        self.db['meta'] = meta
 
     def update_race(self, r):
         # Overwrite previous contents
-        self.db['race'] = Race(r)
+        self.db['race'] = Race(**r)
         self.last_updated()
 
     def get_race(self):
@@ -54,7 +64,7 @@ class DB(object):
 
     def update_track(self, t):
         # Overwrite previous contents
-        self.db['track'] = Track(t)
+        self.db['track'] = Track(**t)
         self.last_updated()
 
     def get_track(self):
@@ -67,7 +77,9 @@ class DB(object):
         self.last_updated()
 
     def get_classes(self):
-        return self.db['classes']
+        return as_sorted_list(
+            self.db['classes'], 'unique_number'
+        )
 
     def add_driver(self, d):
         self.db['drivers'].add(
