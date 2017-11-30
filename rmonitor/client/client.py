@@ -37,10 +37,12 @@ class Client(object):
 
                 # Get message for string
                 m = MessageFactory.get_message(msg)
-                logger.info(str(m))
 
-                # Do something with message
-                # TODO: ???
+                if m:
+                    logger.info(str(m))
+
+                    # Do something with message
+                    # TODO: ???
 
         except KeyboardInterrupt:
             pass
