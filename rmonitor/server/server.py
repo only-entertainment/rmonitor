@@ -10,7 +10,7 @@ from rmonitor.settings.settings import *
 class Server(object):
 
     @staticmethod
-    def _on_new_client(conn, num_clients):
+    def on_new_client(conn, num_clients):
         try:
             # Sending message to connected client
             conn.send(b'Welcome to the local test RMonitor server.\n')
@@ -42,12 +42,16 @@ class Server(object):
             # Out of messages
             conn.send(b'Playback has ended.\n')
 
-        except Exception:
+        except Exception as e:
+            logger.error(e)
+
             # Broke out of loop or Exception
             conn.send(b'Goodbye.\n')
             conn.close()
 
         finally:
+            logger.info('Finished playback, exiting.')
+
             # Broke out of loop or Exception
             conn.send(b'Goodbye.\n')
             conn.close()
@@ -73,6 +77,8 @@ class Server(object):
         s.listen(10)
         logger.debug('Socket now listening.')
 
+        # TODO: Create list of threads for better management
+        # and cleaner exit with joins
         num_clients = 0
         while True:
             # Block and wait to accept new client connections
@@ -80,6 +86,6 @@ class Server(object):
             logger.debug('Connected with ' + address[0] + ':' + str(address[1]))
 
             # Spin off new thread to handle
-            threading.Thread(target=Server._on_new_client, args=(conn, num_clients)).start()
+            threading.Thread(target=Server.on_new_client, args=(conn, num_clients)).start()
 
             num_clients += 1
