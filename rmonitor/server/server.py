@@ -12,8 +12,13 @@ class Server(object):
     @staticmethod
     def on_new_client(conn, num_clients):
         try:
-            # Sending message to connected client
+            # Send welcome message to connected client
+            conn.send(b'******************************************\n')
             conn.send(b'Welcome to the local test RMonitor server.\n')
+            conn.send(b'******************************************\n')
+            conn.send(b'\n')
+            conn.send(b'Warning: This test telnet server is READ-ONLY.\n')
+            conn.send(b'\n')
 
             # Keep the connection open until it runs out of messages
             playback_enabled = True
@@ -43,18 +48,18 @@ class Server(object):
             conn.send(b'Playback has ended.\n')
 
         except Exception as e:
+            # Error
             logger.error(e)
-
-            # Broke out of loop or Exception
-            conn.send(b'Goodbye.\n')
-            conn.close()
+            conn = None
 
         finally:
+            # Finished
             logger.info('Finished playback, exiting.')
 
             # Broke out of loop or Exception
-            conn.send(b'Goodbye.\n')
-            conn.close()
+            if conn:
+                conn.send(b'Goodbye.\n')
+                conn.close()
 
     @staticmethod
     def serve():

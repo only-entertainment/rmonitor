@@ -1,6 +1,8 @@
 from telnetlib import Telnet
 from time import sleep
 
+import sys
+
 from rmonitor.client.message_factory import MessageFactory
 from rmonitor.settings.settings import *
 
@@ -9,9 +11,24 @@ class Client(object):
 
     @staticmethod
     def connect():
-        # Blocking!
+        # TODO: Break this into two methods: connect and listen
+        tn = None
+
         try:
-            tn = Telnet(HOST, PORT, timeout=TIMEOUT)
+            # Block until we make a connection
+            while True:
+                try:
+                    logger.info('Trying to connect...')
+
+                    # Very persistent way to retry
+                    tn = Telnet(HOST, PORT, timeout=5)
+                    break
+
+                except Exception:
+                    # Wait, then keep trying...
+                    sleep(1.0)
+
+            logger.info('Connected.')
 
             while True:
                 # Read line by line...
@@ -20,13 +37,15 @@ class Client(object):
 
                 # Get message for string
                 m = MessageFactory.get_message(msg)
-                logger.info('Message: %s' % str(m))
+
+                if m:
+                    logger.info('Message: %s' % str(m))
 
                 # Do something with message
                 # TODO: ???
 
                 # Wait
-                sleep(SLEEP)
+                #sleep(SLEEP)
 
         except KeyboardInterrupt:
             pass
