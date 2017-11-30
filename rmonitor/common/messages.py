@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from rmonitor.common.helpers import Duration
 
 

@@ -1,10 +1,14 @@
 from telnetlib import Telnet
 from time import sleep
 
-import sys
-
+from rmonitor.client.db import DB
 from rmonitor.client.message_factory import MessageFactory
+from rmonitor.client.message_handler import MessageHandler
 from rmonitor.settings.settings import *
+
+
+# Initialize the DB
+db = DB()
 
 
 class Client(object):
@@ -39,10 +43,11 @@ class Client(object):
                 m = MessageFactory.get_message(msg)
 
                 if m:
+                    # We got something usable
                     logger.info(str(m))
 
                     # Do something with message
-                    # TODO: ???
+                    MessageHandler.handle(db, m)
 
         except KeyboardInterrupt:
             pass

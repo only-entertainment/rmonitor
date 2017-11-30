@@ -1,4 +1,33 @@
 from datetime import datetime, timedelta
+import re
+
+
+def lower_case(s):
+    """
+    Convert string into lower case
+
+    Source: Source: https://github.com/okunishinishi/python-stringcase/blob/master/stringcase.py
+    """
+
+    return str(s).lower()
+
+
+def snake_case(s):
+    """
+    Convert string into snake case
+
+    Source: https://github.com/okunishinishi/python-stringcase/blob/master/stringcase.py
+    """
+
+    ss = re.sub(r"[\-\.\s]", '_', str(s))
+
+    if not ss:
+        return ss
+
+    return lower_case(
+        ss[0]) + re.sub(
+            r"[A-Z]", lambda matched: '_' + lower_case(matched.group(0)), ss[1:]
+        )
 
 
 class Duration(object):
