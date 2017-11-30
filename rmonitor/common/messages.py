@@ -7,7 +7,6 @@ class HeartbeatMessage(object):
 
     def __init__(self, fields):
         self.type = '$F'
-        self.timestamp = datetime.now()
 
         # Number of laps to go
         # (0 - 99999)
@@ -28,6 +27,9 @@ class HeartbeatMessage(object):
         # (GREEN, etc.)
         self.flag_status = fields[4]
 
+        # Timestamp when message was received
+        self.timestamp = fields[5]
+
     def __repr__(self):
         return "Heartbeat(%s, %s, %s, %s, %s, %s, %s)" % (
             self.type,
@@ -44,7 +46,6 @@ class RunInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$B'
-        self.timestamp = datetime.now()
 
         # A unique run number
         # (1 - 99)
@@ -53,6 +54,9 @@ class RunInformationMessage(object):
         # 40 characters maximum
         # (characters)
         self.description = fields[1]
+
+        # Timestamp when message was received
+        self.timestamp = fields[2]
 
     def __repr__(self):
         return "RunInformation(%s, %s, %s, %s)" % (
@@ -67,7 +71,6 @@ class RaceInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$G'
-        self.timestamp = datetime.now()
 
         # The race position
         # (1 - 99)
@@ -85,6 +88,9 @@ class RaceInformationMessage(object):
         # (HH:MM:SS.DDD)
         self.total_time = Duration(fields[3])
 
+        # Timestamp when message was received
+        self.timestamp = fields[4]
+
     def __repr__(self):
         return "RaceInformation(%s, %s, %s, %s, %s, %s)" % (
             self.type,
@@ -100,7 +106,6 @@ class CompetitorInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$A'
-        self.timestamp = datetime.now()
 
         # 8 characters maximum (usually the competitor number)
         # (characters)
@@ -130,6 +135,9 @@ class CompetitorInformationMessage(object):
         # (1 - 99)
         self.class_number = fields[6]
 
+        # Timestamp when message was received
+        self.timestamp = fields[7]
+
     def __repr__(self):
         return "CompetitorInformation(%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (
             self.type,
@@ -148,7 +156,6 @@ class CompInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$COMP'
-        self.timestamp = datetime.now()
 
         # 8 characters maximum (usually the competitor number)
         # (characters)
@@ -178,6 +185,9 @@ class CompInformationMessage(object):
         # (characters)
         self.additional_data = fields[6]
 
+        # Timestamp when message was received
+        self.timestamp = fields[7]
+
     def __repr__(self):
         return "CompInformation(%s, %s, %s, %s, %s, %s, %s, %s, %s)" % (
             self.type,
@@ -196,7 +206,6 @@ class ClassInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$C'
-        self.timestamp = datetime.now()
 
         # A unique class number
         # (1 - 99)
@@ -205,6 +214,9 @@ class ClassInformationMessage(object):
         # 40 characters
         # (characters)
         self.description = fields[1]
+
+        # Timestamp when message was received
+        self.timestamp = fields[2]
 
     def __repr__(self):
         return "ClassInformation(%s, %s, %s, %s)" % (
@@ -219,7 +231,6 @@ class PracticeQualifyingInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$H'
-        self.timestamp = datetime.now()
 
         # The practice/qualifying position
         # (1 - 999)
@@ -237,6 +248,9 @@ class PracticeQualifyingInformationMessage(object):
         # (HH:MM:SS.DDD)
         self.best_lap_time = Duration(fields[3])
 
+        # Timestamp when message was received
+        self.timestamp = fields[4]
+
     def __repr__(self):
         return "PracticeQualifyingInformation(%s, %s, %s, %s, %s, %s)" % (
             self.type,
@@ -252,7 +266,6 @@ class SettingInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$E'
-        self.timestamp = datetime.now()
 
         # Track name, track length
         # (name of the setting)
@@ -262,6 +275,9 @@ class SettingInformationMessage(object):
         # 8 characters maximum for track length
         # (characters)
         self.value = fields[1]
+
+        # Timestamp when message was received
+        self.timestamp = fields[2]
 
     def __repr__(self):
         return "SettingInformation(%s, %s, %s, %s)" % (
@@ -276,7 +292,6 @@ class InitRecordMessage(object):
 
     def __init__(self, fields):
         self.type = '$I'
-        self.timestamp = datetime.now()
 
         # The current time
         # (HH:MM:SS.DDD)
@@ -285,6 +300,9 @@ class InitRecordMessage(object):
         # The current date
         # (dd mmmm yy)
         self.date = fields[1]
+
+        # Timestamp when message was received
+        self.timestamp = fields[2]
 
     def __repr__(self):
         return "InitRecord(%s, %s, %s, %s)" % (
@@ -299,7 +317,6 @@ class PassingInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$J'
-        self.timestamp = datetime.now()
 
         # 8 characters maximum
         # (characters)
@@ -312,6 +329,9 @@ class PassingInformationMessage(object):
         # The total time
         # (HH:MM:SS.DDD)
         self.total_time = Duration(fields[2])
+
+        # Timestamp when message was received
+        self.timestamp = fields[3]
 
     def __repr__(self):
         return "PassingInformation(%s, %s, %s, %s, %s)" % (
@@ -327,13 +347,15 @@ class LapInformationMessage(object):
 
     def __init__(self, fields):
         self.type = '$SP/$SR'
-        self.timestamp = datetime.now()
 
         # Undocumented...
         self.position = fields[0]
         self.registration_number = fields[1]
         self.lap_number = fields[2]
         self.lap_time = Duration(fields[3])
+
+        # Timestamp when message was received
+        self.timestamp = fields[4]
 
     def __repr__(self):
         return "LapInformation(%s, %s, %s, %s, %s, %s)" % (

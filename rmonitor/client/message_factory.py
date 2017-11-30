@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rmonitor.common.messages import MESSAGE_TYPES
 from rmonitor.settings.settings import logger
 
@@ -9,6 +11,9 @@ class MessageFactory(object):
         # Little cleanup
         msg = msg.strip(b"\r\n").decode()
         msg = msg.replace('\"', '')
+
+        # Add a timestamp to each message
+        msg += ",%s" % datetime.now()
 
         # Comma separated string
         fields = msg.split(",")

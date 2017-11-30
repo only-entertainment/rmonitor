@@ -7,7 +7,7 @@ class TestHeartbeatMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$F,14,"00:12:45","13:34:23","00:09:47","Green"'
+            b'$F,14,"00:12:45","13:34:23","00:09:47","Green","1234567890"'
         )
 
         self.assertEqual(obj.type, '$F')
@@ -16,10 +16,11 @@ class TestHeartbeatMessage(TestCase):
         self.assertEqual(str(obj.time_of_day), 'Duration(13:34:23)')
         self.assertEqual(str(obj.race_time), 'Duration(0:09:47)')
         self.assertEqual(obj.flag_status, 'Green')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'Heartbeat($F, 14, Duration(0:12:45), Duration(13:34:23), Duration(0:09:47), Green)'
+            'Heartbeat($F, 14, Duration(0:12:45), Duration(13:34:23), Duration(0:09:47), Green, 1234567890)'
         )
 
 
@@ -27,16 +28,17 @@ class TestRunInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$B,5,"Friday free practice"'
+            b'$B,5,"Friday free practice","1234567890"'
         )
 
         self.assertEqual(obj.type, '$B')
         self.assertEqual(obj.unique_number, '5')
         self.assertEqual(obj.description, 'Friday free practice')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'RunInformation($B, 5, Friday free practice)'
+            'RunInformation($B, 5, Friday free practice, 1234567890)'
         )
 
 
@@ -44,7 +46,7 @@ class TestRaceInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$G,3,"1234BE",14,"01:12:47.872"'
+            b'$G,3,"1234BE",14,"01:12:47.872","1234567890"'
         )
 
         self.assertEqual(obj.type, '$G')
@@ -52,10 +54,11 @@ class TestRaceInformationMessage(TestCase):
         self.assertEqual(obj.registration_number, '1234BE')
         self.assertEqual(obj.laps, '14')
         self.assertEqual(str(obj.total_time), 'Duration(1:12:47.872000)')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'RaceInformation($G, 3, 1234BE, 14, Duration(1:12:47.872000))'
+            'RaceInformation($G, 3, 1234BE, 14, Duration(1:12:47.872000), 1234567890)'
         )
 
 
@@ -63,7 +66,7 @@ class TestCompetitorInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$A,"1234BE","12X",52474,"John","Johnson","USA",5'
+            b'$A,"1234BE","12X",52474,"John","Johnson","USA",5,"1234567890"'
         )
 
         self.assertEqual(obj.type, '$A')
@@ -74,10 +77,11 @@ class TestCompetitorInformationMessage(TestCase):
         self.assertEqual(obj.last_name, 'Johnson')
         self.assertEqual(obj.nationality, 'USA')
         self.assertEqual(obj.class_number, '5')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'CompetitorInformation($A, 1234BE, 12X, 52474, John, Johnson, USA, 5)'
+            'CompetitorInformation($A, 1234BE, 12X, 52474, John, Johnson, USA, 5, 1234567890)'
         )
         
 
@@ -85,7 +89,7 @@ class TestCompInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$COMP,"1234BE","12X",5,"John","Johnson","USA","CAMEL"'
+            b'$COMP,"1234BE","12X",5,"John","Johnson","USA","CAMEL","1234567890"'
         )
 
         self.assertEqual(obj.type, '$COMP')
@@ -96,10 +100,11 @@ class TestCompInformationMessage(TestCase):
         self.assertEqual(obj.last_name, 'Johnson')
         self.assertEqual(obj.nationality, 'USA')
         self.assertEqual(obj.additional_data, 'CAMEL')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'CompInformation($COMP, 1234BE, 12X, 5, John, Johnson, USA, CAMEL)'
+            'CompInformation($COMP, 1234BE, 12X, 5, John, Johnson, USA, CAMEL, 1234567890)'
         )
 
 
@@ -107,16 +112,17 @@ class TestClassInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$C,5,"Formula 300"'
+            b'$C,5,"Formula 300","1234567890"'
         )
 
         self.assertEqual(obj.type, '$C')
         self.assertEqual(obj.unique_number, '5')
         self.assertEqual(obj.description, "Formula 300")
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'ClassInformation($C, 5, Formula 300)'
+            'ClassInformation($C, 5, Formula 300, 1234567890)'
         )
 
 
@@ -124,7 +130,7 @@ class TestPracticeQualifyingInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$H,2,"1234BE",3,"00:02:17.872"'
+            b'$H,2,"1234BE",3,"00:02:17.872","1234567890"'
         )
 
         self.assertEqual(obj.type, '$H')
@@ -133,10 +139,11 @@ class TestPracticeQualifyingInformationMessage(TestCase):
         self.assertEqual(obj.best_lap, '3')
         self.assertEqual(str(obj.best_lap_time), 'Duration(0:02:17.872000)')
         self.assertEqual(str(obj.best_lap_time), 'Duration(0:02:17.872000)')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'PracticeQualifyingInformation($H, 2, 1234BE, 3, Duration(0:02:17.872000))'
+            'PracticeQualifyingInformation($H, 2, 1234BE, 3, Duration(0:02:17.872000), 1234567890)'
         )
 
 
@@ -144,30 +151,32 @@ class TestSettingInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$E,"TRACKNAME","Indianapolis Motor Speedway"'
+            b'$E,"TRACKNAME","Indianapolis Motor Speedway","1234567890"'
 
         )
 
         self.assertEqual(obj.type, '$E')
         self.assertEqual(obj.description, 'TRACKNAME')
         self.assertEqual(obj.value, 'Indianapolis Motor Speedway')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'SettingInformation($E, TRACKNAME, Indianapolis Motor Speedway)'
+            'SettingInformation($E, TRACKNAME, Indianapolis Motor Speedway, 1234567890)'
         )
 
         obj = MessageFactory.get_message(
-            b'$E,"TRACKLENGTH","2.500"'
+            b'$E,"TRACKLENGTH","2.500","1234567890"'
         )
 
         self.assertEqual(obj.type, '$E')
         self.assertEqual(obj.description, 'TRACKLENGTH')
         self.assertEqual(obj.value, '2.500')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'SettingInformation($E, TRACKLENGTH, 2.500)'
+            'SettingInformation($E, TRACKLENGTH, 2.500, 1234567890)'
         )
 
 
@@ -175,16 +184,17 @@ class TestInitRecordMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$I,"16:36:08.000","12 jan 01"'
+            b'$I,"16:36:08.000","12 jan 01","1234567890"'
         )
 
         self.assertEqual(obj.type, '$I')
         self.assertEqual(str(obj.time_of_day), 'Duration(16:36:08)')
         self.assertEqual(obj.date, '12 jan 01')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'InitRecord($I, Duration(16:36:08), 12 jan 01)'
+            'InitRecord($I, Duration(16:36:08), 12 jan 01, 1234567890)'
         )
 
 
@@ -192,17 +202,18 @@ class TestPassingInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$J,"1234BE","00:02:03.826","01:42:17.672"'
+            b'$J,"1234BE","00:02:03.826","01:42:17.672","1234567890"'
         )
 
         self.assertEqual(obj.type, '$J')
         self.assertEqual(obj.registration_number, '1234BE')
         self.assertEqual(str(obj.lap_time), 'Duration(0:02:03.826000)')
         self.assertEqual(str(obj.total_time), 'Duration(1:42:17.672000)')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'PassingInformation($J, 1234BE, Duration(0:02:03.826000), Duration(1:42:17.672000))'
+            'PassingInformation($J, 1234BE, Duration(0:02:03.826000), Duration(1:42:17.672000), 1234567890)'
         )
 
 
@@ -210,7 +221,7 @@ class TestLapInformationMessage(TestCase):
 
     def test_parse(self):
         obj = MessageFactory.get_message(
-            b'$SP,1,"ABCD123",3,"00:01:08.123"'
+            b'$SP,1,"ABCD123",3,"00:01:08.123","1234567890"'
         )
 
         self.assertEqual(obj.type, '$SP/$SR')
@@ -218,14 +229,15 @@ class TestLapInformationMessage(TestCase):
         self.assertEqual(obj.registration_number, 'ABCD123')
         self.assertEqual(obj.lap_number, '3')
         self.assertEqual(str(obj.lap_time), 'Duration(0:01:08.123000)')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000))'
+            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000), 1234567890)'
         )
 
         obj = MessageFactory.get_message(
-            b'$SR,1,"ABCD123",3,"00:01:08.123"'
+            b'$SR,1,"ABCD123",3,"00:01:08.123","1234567890'
         )
 
         self.assertEqual(obj.type, '$SP/$SR')
@@ -233,16 +245,18 @@ class TestLapInformationMessage(TestCase):
         self.assertEqual(obj.registration_number, 'ABCD123')
         self.assertEqual(obj.lap_number, '3')
         self.assertEqual(str(obj.lap_time), 'Duration(0:01:08.123000)')
+        self.assertEqual(obj.timestamp, '1234567890')
 
         self.assertEqual(
             str(obj),
-            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000))'
+            'LapInformation($SP/$SR, 1, ABCD123, 3, Duration(0:01:08.123000), 1234567890)'
         )
 
 
 class TestMessageFactory(TestCase):
 
     def test_get_message(self):
+        # Nothing
         msg = MessageFactory.get_message(b'')
         self.assertEqual(msg, None)
 
@@ -254,5 +268,6 @@ class TestMessageFactory(TestCase):
         msg = MessageFactory.get_message('$MONEY,1,2,3')
         self.assertEqual(msg, None)
 
-        msg = MessageFactory.get_message(b'$I,"16:36:08.000","12 jan 01"')
+        # Real
+        msg = MessageFactory.get_message(b'$I,"16:36:08.000","12 jan 01","1234567890')
         self.assertTrue(msg)
