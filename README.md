@@ -60,7 +60,7 @@ The protocol specifications are from:
         $ cd projects
 
         (required)
-	    $ git clone https://github.com/krisneuharth/rmonitor rmonitor
+	    $ git clone git@github.com:krisneuharth/rmonitor.git rmonitor
 
 2) Switch to project directory:
 
