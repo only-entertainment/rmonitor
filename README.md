@@ -94,7 +94,8 @@ The protocol specifications are from:
 
 1) From the root of the project:
 
-        (rmonitor) $ python ./bin/manage.py run
+        (rmonitor) $ python ./bin/run_server.py
+        (rmonitor) $ python ./bin/run_client.py
 
 
 ## Contributions
