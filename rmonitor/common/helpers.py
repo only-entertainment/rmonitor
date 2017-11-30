@@ -11,7 +11,7 @@ class Duration(object):
 
         try:
             t = datetime.strptime(s, "%H:%M:%S.%f")
-        except:
+        except Exception:
             # Handle this other case...
             t = datetime.strptime(s, "%H:%M:%S")
 

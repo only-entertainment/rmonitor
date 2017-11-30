@@ -10,36 +10,44 @@ from rmonitor.settings.settings import *
 class Server(object):
 
     @staticmethod
-    def _on_new_client(conn):
+    def _on_new_client(conn, num_clients):
         try:
             # Sending message to connected client
             conn.send(b'Welcome to the local test RMonitor server.\n')
 
             # Keep the connection open until it runs out of messages
             playback_enabled = True
-            while playback_enabled:
-                conn.send(b'Playback file: %s.\n' % PLAYBACK_MESSAGES)
+            num_clients = str(num_clients)
 
+            while playback_enabled:
+                message = 'Playback file: %s\n' % PLAYBACK_MESSAGES
+                conn.send(message.encode())
+
+                # Read up the file
                 with open(PLAYBACK_MESSAGES) as tm:
                     msg_count = 0
 
+                    # Read every line
                     for message in tm.readlines():
-                        logger.info('Sending message `%s` - `%s`' % (str(msg_count), message))
+                        # Send to the client
+                        logger.info('Client-%s - Message-%s - `%s`' % (num_clients, str(msg_count), message.strip('\n')))
                         conn.send(message.encode())
-
                         msg_count += 1
+
+                        # Allow for faster variable playback speed
                         sleep(1 / PLAYBACK_SPEED)
+
                     playback_enabled = False
 
             # Out of messages
             conn.send(b'Playback has ended.\n')
 
-            # Cheat and close the connection
-            #raise
+        except Exception:
+            # Broke out of loop or Exception
+            conn.send(b'Goodbye.\n')
+            conn.close()
 
-        except Exception as e:
-            print(e)
-
+        finally:
             # Broke out of loop or Exception
             conn.send(b'Goodbye.\n')
             conn.close()
@@ -55,8 +63,8 @@ class Server(object):
         try:
             # Bind socket to local host and port
             s.bind((HOST, int(PORT)))
-        except socket.error as msg:
-            logger.debug('Bind failed:', msg)
+        except socket.error as e:
+            logger.debug('Bind failed:', e)
             sys.exit()
 
         logger.debug('Socket bind complete.')
@@ -65,10 +73,13 @@ class Server(object):
         s.listen(10)
         logger.debug('Socket now listening.')
 
+        num_clients = 0
         while True:
-            # Accept new client connections, blocks
+            # Block and wait to accept new client connections
             conn, address = s.accept()
             logger.debug('Connected with ' + address[0] + ':' + str(address[1]))
 
             # Spin off new thread to handle
-            threading.Thread(target=Server._on_new_client, args=(conn,)).start()
+            threading.Thread(target=Server._on_new_client, args=(conn, num_clients)).start()
+
+            num_clients += 1
