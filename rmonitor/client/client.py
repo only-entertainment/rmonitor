@@ -37,15 +37,10 @@ class Client(object):
 
                 # Get message for string
                 m = MessageFactory.get_message(msg)
-
-                if m:
-                    logger.info('Message: %s' % str(m))
+                logger.info(str(m))
 
                 # Do something with message
                 # TODO: ???
-
-                # Wait
-                #sleep(SLEEP)
 
         except KeyboardInterrupt:
             pass

@@ -21,17 +21,14 @@ class MessageFactory(object):
         # Split off the type
         msg_type = fields[0]
 
-        # Split off the data fields
+        # Split off the other data fields
         fields = fields[1:]
-
-        logger.debug(msg_type)
-        logger.debug(fields)
 
         # Find the corresponding message class
         clazz = MESSAGE_TYPES.get(msg_type)
 
         if not clazz:
-            logger.debug("Missing message type: %s", msg_type)
+            logger.warn(msg_type)
             return None
 
         # Return class instance with data
