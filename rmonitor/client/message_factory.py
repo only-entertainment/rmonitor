@@ -8,6 +8,9 @@ class MessageFactory(object):
 
     @staticmethod
     def get_message(msg):
+
+        # TODO: Log for playback right off the wire
+
         # Little cleanup
         msg = msg.strip(b"\r\n").decode()
         msg = msg.replace('\"', '')

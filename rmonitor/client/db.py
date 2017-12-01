@@ -63,8 +63,15 @@ class DB(object):
         return self.db['race']
 
     def update_track(self, t):
+        # Get from the message
+        description = t.get('description')
+        value = t.get('value')
+
         # Overwrite previous contents
-        self.db['track'] = Track(**t)
+        track = self.db['track']
+
+        track = track._replace(description, value)
+        self.db['track'] = track
         self.last_updated()
 
     def get_track(self):
@@ -88,7 +95,9 @@ class DB(object):
         self.last_updated()
 
     def get_drivers(self):
-        return self.db['drivers']
+        return as_sorted_list(
+            self.db['drivers'], 'TODO'
+        )
 
     def add_driver_to_team(self, t, d):
         # TODO
@@ -105,8 +114,14 @@ class DB(object):
         self.last_updated()
 
     def get_teams(self):
-        return self.db['teams']
+        return as_sorted_list(
+            self.db['teams'], 'TODO'
+        )
 
     def get_teams_for_class(self, c):
-        # TODO
-        pass
+        teams_for_class = []
+        # filter == c.unique_number
+
+        return as_sorted_list(
+            teams_for_class, 'TODO'
+        )

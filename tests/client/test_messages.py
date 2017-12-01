@@ -152,7 +152,6 @@ class TestSettingInformationMessage(TestCase):
     def test_parse(self):
         obj = MessageFactory.get_message(
             b'$E,"TRACKNAME","Indianapolis Motor Speedway","1234567890"'
-
         )
 
         self.assertEqual(obj.type, '$E')
