@@ -1,5 +1,7 @@
 # RMonitor Client
 
+### WIP: Still very much a work in progress, the parser gets most of the messages. Be forewarned!
+
 ### What is this?
 
 A Python library for parsing the RMonitor timing protocol used in the live timing of automotive and karting events.
